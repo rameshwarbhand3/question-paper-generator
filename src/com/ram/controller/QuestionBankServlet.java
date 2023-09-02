@@ -75,7 +75,6 @@ public class QuestionBankServlet extends HttpServlet {
 			break;
 
 		default:
-			// System.out.println("default action!!");
 			listQuestions(req, resp);
 		}
 	}
@@ -83,21 +82,16 @@ public class QuestionBankServlet extends HttpServlet {
 	private void showByComplexity(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String questionByComplexity = req.getParameter("complexity");
-		System.out.println(questionByComplexity);
 		List<Question> existingQuestionByComplexity = questionDao.findByComplexity(questionByComplexity);
-		System.out.println(existingQuestionByComplexity);
 		req.setAttribute("listQuestion", existingQuestionByComplexity);
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-list.jsp");
 		requestDispatcher.forward(req, resp);
-
 	}
 
 	private void showByCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String questionByCategory = req.getParameter("category");
-		System.out.println(questionByCategory);
 		List<Question> existingQuestionByCategory = questionDao.findByCategory(questionByCategory);
-		System.out.println(existingQuestionByCategory);
 		req.setAttribute("listQuestion", existingQuestionByCategory);
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-list.jsp");
@@ -107,8 +101,7 @@ public class QuestionBankServlet extends HttpServlet {
 	private void deleteQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		int srno = Integer.parseInt(req.getParameter("srno"));
 		questionDao.deleteQuestion(srno);
-		resp.sendRedirect("/QuestionPaper/list");
-
+		resp.sendRedirect(req.getContextPath() + "/list");
 	}
 
 	private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -118,7 +111,6 @@ public class QuestionBankServlet extends HttpServlet {
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-form.jsp");
 		requestDispatcher.forward(req, resp);
-
 	}
 
 	private void editQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -145,17 +137,17 @@ public class QuestionBankServlet extends HttpServlet {
 
 		questionDao.update(q);
 
-		resp.sendRedirect("/QuestionPaper/list");
-
+		resp.sendRedirect(req.getContextPath() + "/list");
 	}
 
 	private void listQuestions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Question> listQuestion = questionDao.findAll();
 		req.setAttribute("listQuestion", listQuestion);
-		// System.out.println(listQuestion);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("question-list.jsp");
+		System.out.println("contextPath" + req.getContextPath());
+		System.out.println("getServletPath" + req.getServletPath());
+		System.out.println("getServletContext" + req.getServletContext().getContextPath());
 		dispatcher.forward(req, resp);
-
 	}
 
 	private void insertQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -180,8 +172,7 @@ public class QuestionBankServlet extends HttpServlet {
 		// System.out.println("question=>" + q);
 		questionDao.insert(q);
 
-		resp.sendRedirect("/QuestionPaper/list");
-
+		resp.sendRedirect(req.getContextPath()+"/list");
 	}
 
 }

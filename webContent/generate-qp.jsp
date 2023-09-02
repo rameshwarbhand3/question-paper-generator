@@ -114,7 +114,7 @@
 			alert("Do you want to more criteria?");
 		}
 		function generateQuestionPaper(){
-			fetch("/QuestionPaper/generate", { method:"post", body:JSON.stringify(template) })
+			fetch("/question-paper-generator/generate", { method:"post", body:JSON.stringify(template) })
 			  .then(res => res.text())
 			  .then(txt => {
 				  let data = JSON.parse(txt) 

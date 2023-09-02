@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-			System.out.println("Inside login");
+		System.out.println("Inside login");
 		User login = new User();
 		login.setUsername(username);
 		login.setPassword(password);
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 			if (userDao.validate(login)) {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
-				response.sendRedirect("/QuestionPaper/list");
+				response.sendRedirect(request.getContextPath() + "/list");
 			} else {
 				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 				out.print("<font color=red><h2>Sorry username or Password is error.</h2></font>");
@@ -50,5 +50,5 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
